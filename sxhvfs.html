@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload and Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-bottom: 20px;
+        }
+
+        #sendButton {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="file" id="imageInput" accept="image/*">
+        <br>
+        <img id="imagePreview" alt="Preview">
+        <br>
+        <button id="sendButton" onclick="sendImage()">Send</button>
+    </div>
+
+    <script>
+        function sendImage() {
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const imageFile = imageInput.files[0];
+
+                // You can perform additional operations with the image file if needed
+
+                // Log the image link to the console
+                console.log("Image Link:", URL.createObjectURL(imageFile));
+            } else {
+                console.error("No image selected.");
+            }
+        }
+
+        // Preview the selected image
+        document.getElementById('imageInput').addEventListener('change', function () {
+            const imageInput = this;
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.src = "";
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+        });
+    </script>
+</body>
+</html>
